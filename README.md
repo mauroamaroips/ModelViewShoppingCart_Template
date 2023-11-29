@@ -7,7 +7,7 @@ Vamos aplicar o Padrão Observer, para fazermos a separação entre a lógica da
 - Sempre que as classes do Model modificam o seu seu estado, notificam a View para atualizar a vizualização da informação. 
 ## Exemplo
 Pretende-se realizar uma aplicação para gerir a compra de produtos online - " carrinho de compras" que deverá ter a seguinte interface 
-![Fig1](/images/userinterface.JPG)
+![Fig1](./userinterface.JPG)
 
 ### Realize as modificações necessárias do código de forma a:
     - A classe Shopping Cart assume o papel de ConcreteSubject
