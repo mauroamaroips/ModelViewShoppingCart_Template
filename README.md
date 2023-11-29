@@ -6,7 +6,8 @@ Vamos aplicar o Padrão Observer, para fazermos a separação entre a lógica da
 - Consideramos que o pacote View tem as classes responsaveis por mostrar uma vista sobre os objecto do model e receber e processsar a interação do utilizador. 
 - Sempre que as classes do Model modificam o seu seu estado, notificam a View para atualizar a vizualização da informação. 
 ## Exemplo
-Pretende-se realizar uma aplicação para gerir a compra de produtos online - " carrinho de compras" que deverá ter a seguinte interface 
+Pretende-se realizar uma aplicação para gerir a compra de produtos online - " carrinho de compras" que deverá ter a seguinte interface:
+
 ![Fig1](./userinterface.JPG)
 
 ### Realize as modificações necessárias do código de forma a:
