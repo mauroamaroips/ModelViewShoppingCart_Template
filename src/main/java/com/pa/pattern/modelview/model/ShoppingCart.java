@@ -56,7 +56,6 @@ public class ShoppingCart extends Subject{
         }
     }
 
-
     public Product lastProductAdded(){
           return products.get(products.size()-1);
 

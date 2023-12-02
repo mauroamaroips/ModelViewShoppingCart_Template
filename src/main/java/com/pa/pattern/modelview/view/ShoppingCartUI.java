@@ -55,7 +55,7 @@ public class ShoppingCartUI extends VBox implements Observer{
         this.btAddProduct = new Button("Add");
         this.btRemoveProduct = new Button("Remove");
         this.listProductsView = new ListView<>();
-        this.totalPriceAlert = new Alert(Alert.AlertType.NONE); //alerta
+        this.totalPriceAlert = new Alert(Alert.AlertType.WARNING); //alerta
         lblError = new Label();
         
         lblCount = new Label("0");
@@ -118,6 +118,24 @@ public class ShoppingCartUI extends VBox implements Observer{
         txtInputId.setText("");
     }
 
+    //Alerta
+
+    private void checkTotalValue(){
+        double totalValue = model.getTotal();
+
+        double thresholdValue = 100.0;
+
+        if(totalValue > thresholdValue){
+            showAlert("Total Value Exceeded", "The total value has exceeded the threshold.");
+        }
+    }
+
+    private void showAlert(String title, String content){
+        totalPriceAlert.setTitle(title);
+        totalPriceAlert.setHeaderText(null);
+        totalPriceAlert.setContentText(content);
+        totalPriceAlert.showAndWait();
+    }
 
     @Override
     public void update(Object obj) {
@@ -125,5 +143,7 @@ public class ShoppingCartUI extends VBox implements Observer{
         this.listProductsView.getItems().clear();
         listProductsView.getItems().addAll(listProducts);
         lblCount.setText(""+ model.getTotal());
+
+        checkTotalValue(); //Alerta
     }
 }
