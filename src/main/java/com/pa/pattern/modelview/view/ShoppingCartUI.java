@@ -20,19 +20,24 @@ import javafx.scene.layout.VBox;
 
 import java.util.Collection;
 
-
 /**
  *
  * @author patriciamacedo
  */
-public class ShoppingCartUI extends VBox {
+public class ShoppingCartUI extends VBox implements Observer{
 
     //controlos
     private TextField txtInputId;
     private Button btAddProduct;
+    private Button btRemoveProduct;
     private ListView<Product> listProductsView;
     private Label lblError;
     private Label lblCount;
+    private Collection listProducts;
+
+    //alerta
+
+    private Alert totalPriceAlert;
 
     //modelo
     private final ShoppingCart model;
@@ -48,12 +53,14 @@ public class ShoppingCartUI extends VBox {
         
         this.txtInputId = new TextField();
         this.btAddProduct = new Button("Add");
+        this.btRemoveProduct = new Button("Remove");
         this.listProductsView = new ListView<>();
+        this.totalPriceAlert = new Alert(Alert.AlertType.NONE); //alerta
         lblError = new Label();
         
         lblCount = new Label("0");
         
-        HBox firstRow = new HBox(txtInputId,btAddProduct, new Label("Total Value"),lblCount);
+        HBox firstRow = new HBox(txtInputId,btAddProduct, btRemoveProduct, new Label("Total Value"),lblCount);
         firstRow.setAlignment(Pos.CENTER);
         firstRow.setPadding(new Insets(2,2,2,2));
         firstRow.setSpacing(4);
@@ -64,6 +71,10 @@ public class ShoppingCartUI extends VBox {
     private void setTriggers() {
         btAddProduct.setOnAction((ActionEvent event) -> {
             doAddProduct();
+        });
+
+        btRemoveProduct.setOnAction((ActionEvent event) -> {
+            doRemoveProduct();
         });
 
     }
@@ -82,13 +93,22 @@ public class ShoppingCartUI extends VBox {
         }
     }
 
+    private void doRemoveProduct(){
+        String id = getInputProductId();
 
+       try {
+           model.removeProduct(Integer.parseInt(id));
+          clearInput();
+       } catch(ShoppingCartException e){
+           showError(e.getMessage());
+       } catch(NumberFormatException e){
+          showError("it is not a number");
+        }
+       }
 
     private void showError(String msg) {
         lblError.setText(msg);
     }
-
-
 
     private String getInputProductId() {
         return txtInputId.getText().trim();
@@ -98,6 +118,12 @@ public class ShoppingCartUI extends VBox {
         txtInputId.setText("");
     }
 
-   
-    
+
+    @Override
+    public void update(Object obj) {
+        listProducts = model.getProducts();
+        this.listProductsView.getItems().clear();
+        listProductsView.getItems().addAll(listProducts);
+        lblCount.setText(""+ model.getTotal());
+    }
 }

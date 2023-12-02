@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author brunomnsilva
  */
-public class ShoppingCart {
+public class ShoppingCart extends Subject{
     
     private String name;
     private List<Product> products;
@@ -28,7 +28,9 @@ public class ShoppingCart {
 
     public void addProduct(Product p) {
         products.add(p);
+
         //TODO
+        notifyObservers(null);
     }
 
     public void addProduct(int id) throws ShoppingCartException {
@@ -38,8 +40,23 @@ public class ShoppingCart {
 
     public void removerProduct(Product p) {
         products.remove(p);
+
         //TODO
+        notifyObservers(null);
     }
+
+    public void removeProduct(int id) throws ShoppingCartException{
+
+        for (Product p : products){
+            if(products.contains(p)){
+                removerProduct(p);
+                break; //Como o
+            }
+
+        }
+    }
+
+
     public Product lastProductAdded(){
           return products.get(products.size()-1);
 
